@@ -5,4 +5,6 @@
   @!component('snowdog/bacon', {
     img: '/images/bacon.jpg'
   })
+
+  {{{ '<script> const baconBtn = document.querySelector(`[type="button"]`);baconBtn.addEventListener(`click`, function(){baconBtn.insertAdjacentHTML(`afterend`, `<img src="/images/bacon.jpg" alt="Beautiful slices of fried bacon">`)});</script>' }}}
 @end

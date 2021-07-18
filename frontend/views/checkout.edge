@@ -1,0 +1,101 @@
+@layout('layouts/main')
+@set('title', 'Checkout')
+
+@section('body')
+
+  <section class="form-section">
+    <form action="/order" method="post" id="checkoutform">
+      <div class="form-header">
+        <div class="form-header-dot">
+          <span>1</span>
+        </div>
+        <span class="form-header-title">Personal information</span>
+      </div>
+      <div class="spread-out">
+        <div class="spread-out-container">
+          <label for="firstName">First name</label>
+          <input type="text" id="firstName" name="firstName" placeholder="Elon">
+          <div class="error-message">{{ flashMessages.get('message.firstName') ? flashMessages.get('message.firstName') : '' }}</div>
+        </div>
+        <div class="spread-out-container">
+          <label for="lastName">Last name</label>
+          <input type="text" id="lastName" name="lastName" placeholder="Musk">
+          <div class="error-message">{{ flashMessages.get('message.lastName') ? flashMessages.get('message.lastName') : '' }}</div>
+        </div>
+      </div>
+      <label for="email">Email</label>
+      <input type="text" id="email" name="email" placeholder="elon@spacex.com">
+      <div class="error-message">{{ flashMessages.get('message.email') ? flashMessages.get('message.email') : '' }}</div>
+      <div class="spread-out">
+        <div class="spread-out-container">
+          <label for="country">Country</label>
+          <select name="country" id="country" form="checkoutform">
+            <option value="us">United States</option>
+            <option value="pl">Poland</option>
+          </select>
+        </div>
+        <div class="spread-out-container">
+          <label for="postalCode">Postal Code</label>
+          <input type="text" id="postalCode" name="postalCode" placeholder="10001">
+          <div class="error-message">{{ flashMessages.get('message.postalCode') ? flashMessages.get('message.postalCode') : '' }}</div>
+        </div>
+      </div>
+      <label for="phone">Phone Number</label>
+      <input type="text" id="phone" name="phone" placeholder="(212) 692-93-92">
+      <div class="error-message">{{ flashMessages.get('message.phone') ? flashMessages.get('message.phone') : '' }}</div>
+      <div class="form-header">
+        <div class="form-header-dot">
+          <span>2</span>
+        </div>
+        <span class="form-header-title">Payment details</span>
+        <img src="./images/lock.png" alt="">
+      </div>
+      <label for="creditCard">Credit Card Number</label>
+      <input type="text" id="creditCard" name="creditCard" placeholder="0000–0000–0000-0000">
+      <div class="error-message">{{ flashMessages.get('message.creditCard') ? flashMessages.get('message.creditCard') : '' }}</div>
+      <div class="spread-out">
+        <div class="spread-out-container">
+          <label for="CVV">Security code</label>
+          <input type="text" id="CVV" name="CVV" placeholder="***">
+          <div class="error-message">{{ flashMessages.get('message.CVV') ? flashMessages.get('message.CVV') : '' }}</div>
+        </div>
+        <div class="spread-out-container">
+          <label for="expDate">Expiration date</label>
+          <input type="text" id="expDate" name="expDate" placeholder="MM/YY">
+          <div class="error-message">{{ flashMessages.get('message.expDate') ? flashMessages.get('message.expDate') : '' }}</div>
+        </div>
+      </div>
+      <button type="submit" class="form-btn">
+        <img src='./images/cart.png'alt=''>
+        Complete purchase</button>
+    </form>
+    <div class="cart">
+      <div class="cart-container">
+        <span class="cart-header">Your order</span>
+        <div class="cart-items">
+          @each(item in state.cart.items)
+            <div class="cart-item spread-out">
+              <p>{{item.name}}</p>
+              <p>$ {{item.price}}</p>
+            </div>
+          @end
+        </div>
+        <div class="totals">
+          <div class="totals-item spread-out">
+            <p>Total purchases</p>
+            <p>$ {{state.cart.totals.subTotal}}</p>
+          </div>
+          <div class="totals-item spread-out">
+            <p>Est. tax</p>
+            <p>$ {{state.cart.totals.tax}}</p>
+          </div>
+        </div>
+        <div class="total spread-out">
+          <p class="total-title">Total</p>
+          <p class="total-sum">$ {{state.cart.totals.grandTotal}}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+@end
